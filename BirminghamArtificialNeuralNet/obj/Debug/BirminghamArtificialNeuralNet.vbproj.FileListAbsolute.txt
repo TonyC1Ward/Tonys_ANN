@@ -1,0 +1,13 @@
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.vbprojResolveAssemblyReference.cache
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.BhamANN.resources
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.Resources.resources
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.vbproj.GenerateResource.Cache
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.vbproj.CoreCompileInputs.cache
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.exe.config
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.exe
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.pdb
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.xml
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.exe
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.xml
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.pdb
+C:\Tony\AI\GitRepo\BirminghamArtificialNeuralNet\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.ShowArray.resources
