@@ -10,8 +10,6 @@ Public Class BhamANN
     Public Const SUCCESS As Double = 0.0002
     Public Const MAX_EPOCH As Int32 = 2000000
 
-
-
     Public DeltaWeightIH(NUMIN + 1, NUMHID + 1) As Double
     Public WeightIH(NUMIN + 1, NUMHID + 1) As Double
     Public DeltaWeightHO(NUMHID + 1, NUMOUT + 1) As Double
