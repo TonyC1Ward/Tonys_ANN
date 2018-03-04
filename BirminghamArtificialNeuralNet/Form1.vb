@@ -198,6 +198,7 @@ Public Class BhamANN
             Next
             If epoch Mod 250 = 0 Then
                 DataGridView1.Rows.Add(New String() {epoch, Output(1, 1), Output(2, 1), Output(3, 1), Output(4, 1), Errored})
+                DataGridView5.Rows.Add(New String() {epoch, WeightIH(0, 0), WeightIH(0, 1), WeightIH(0, 2), WeightIH(0, 3), WeightIH(1, 0), WeightIH(1, 1), WeightIH(1, 2), WeightIH(1, 3), WeightIH(2, 0), WeightIH(2, 1), WeightIH(2, 2), WeightIH(2, 3), WeightIH(3, 0), WeightIH(3, 1), WeightIH(3, 2), WeightIH(3, 3)})
             End If
 
             If Errored < SUCCESS Then
@@ -209,10 +210,6 @@ Public Class BhamANN
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         DriveTheNeuralNetwork()
-    End Sub
-
-    Private Sub Button6_Click(sender As Object, e As EventArgs)
-        ShowArray.Show()
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
@@ -255,10 +252,6 @@ Public Class BhamANN
         MsgBox(TheResult)
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
-
-    End Sub
-
     Private Sub Button2_Click_2(sender As Object, e As EventArgs) Handles Button2.Click
         Dim i As Int16
         DataGridView4.Columns(0).DefaultCellStyle.BackColor = Color.DarkGray
@@ -267,11 +260,4 @@ Public Class BhamANN
         Next
     End Sub
 
-    Private Sub GroupBox2_Enter(sender As Object, e As EventArgs) Handles GroupBox2.Enter
-
-    End Sub
-
-    Private Sub GroupBox3_Enter(sender As Object, e As EventArgs) Handles GroupBox3.Enter
-
-    End Sub
 End Class
