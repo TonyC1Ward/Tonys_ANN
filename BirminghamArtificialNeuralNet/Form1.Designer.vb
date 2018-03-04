@@ -27,12 +27,6 @@ Partial Class BhamANN
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -53,11 +47,24 @@ Partial Class BhamANN
         Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.DataGridView5 = New System.Windows.Forms.DataGridView()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.equals = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Multiply1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column19 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Multiply2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column20 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Add1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column21 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Multiply3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column22 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
@@ -109,42 +116,6 @@ Partial Class BhamANN
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.Size = New System.Drawing.Size(800, 256)
         Me.DataGridView1.TabIndex = 8
-        '
-        'Column5
-        '
-        Me.Column5.HeaderText = "Epoch"
-        Me.Column5.Name = "Column5"
-        Me.Column5.Width = 125
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Variable 1"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Width = 125
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Variable 2"
-        Me.Column2.Name = "Column2"
-        Me.Column2.Width = 125
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Variable 3"
-        Me.Column3.Name = "Column3"
-        Me.Column3.Width = 125
-        '
-        'Column4
-        '
-        Me.Column4.HeaderText = "Variable 4"
-        Me.Column4.Name = "Column4"
-        Me.Column4.Width = 125
-        '
-        'Column6
-        '
-        Me.Column6.HeaderText = "Network Error"
-        Me.Column6.Name = "Column6"
-        Me.Column6.Width = 125
         '
         'Label1
         '
@@ -292,21 +263,57 @@ Partial Class BhamANN
         'GroupBox5
         '
         Me.GroupBox5.Controls.Add(Me.DataGridView5)
-        Me.GroupBox5.Location = New System.Drawing.Point(87, 617)
+        Me.GroupBox5.Location = New System.Drawing.Point(12, 617)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(1130, 253)
+        Me.GroupBox5.Size = New System.Drawing.Size(1305, 202)
         Me.GroupBox5.TabIndex = 15
         Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "GroupBox5"
+        Me.GroupBox5.Text = "Calculations Between Input and Hidden layer"
         '
         'DataGridView5
         '
         Me.DataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView5.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column16, Me.Column17, Me.Column18, Me.Column19, Me.Column20})
+        Me.DataGridView5.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column16, Me.Column17, Me.equals, Me.Column18, Me.Multiply1, Me.Column19, Me.Multiply2, Me.Column20, Me.Add1, Me.Column21, Me.Multiply3, Me.Column22})
         Me.DataGridView5.Location = New System.Drawing.Point(6, 29)
         Me.DataGridView5.Name = "DataGridView5"
-        Me.DataGridView5.Size = New System.Drawing.Size(634, 150)
+        Me.DataGridView5.Size = New System.Drawing.Size(1282, 150)
         Me.DataGridView5.TabIndex = 0
+        '
+        'Column5
+        '
+        Me.Column5.HeaderText = "Epoch"
+        Me.Column5.Name = "Column5"
+        Me.Column5.Width = 125
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Variable 1"
+        Me.Column1.Name = "Column1"
+        Me.Column1.Width = 125
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Variable 2"
+        Me.Column2.Name = "Column2"
+        Me.Column2.Width = 125
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Variable 3"
+        Me.Column3.Name = "Column3"
+        Me.Column3.Width = 125
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "Variable 4"
+        Me.Column4.Name = "Column4"
+        Me.Column4.Width = 125
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Network Error"
+        Me.Column6.Name = "Column6"
+        Me.Column6.Width = 125
         '
         'Column16
         '
@@ -315,29 +322,64 @@ Partial Class BhamANN
         '
         'Column17
         '
-        Me.Column17.HeaderText = "Column17"
+        Me.Column17.HeaderText = "Delta Weight"
         Me.Column17.Name = "Column17"
+        '
+        'equals
+        '
+        Me.equals.HeaderText = "equals"
+        Me.equals.Name = "equals"
         '
         'Column18
         '
-        Me.Column18.HeaderText = "Column18"
+        Me.Column18.HeaderText = "eta (Learning)"
         Me.Column18.Name = "Column18"
+        '
+        'Multiply1
+        '
+        Me.Multiply1.HeaderText = "Multiply"
+        Me.Multiply1.Name = "Multiply1"
         '
         'Column19
         '
-        Me.Column19.HeaderText = "Column19"
+        Me.Column19.HeaderText = "Training Value"
         Me.Column19.Name = "Column19"
+        '
+        'Multiply2
+        '
+        Me.Multiply2.HeaderText = "Multiply"
+        Me.Multiply2.Name = "Multiply2"
         '
         'Column20
         '
-        Me.Column20.HeaderText = "Column20"
+        Me.Column20.HeaderText = "Delta Hidden"
         Me.Column20.Name = "Column20"
+        '
+        'Add1
+        '
+        Me.Add1.HeaderText = "Add"
+        Me.Add1.Name = "Add1"
+        '
+        'Column21
+        '
+        Me.Column21.HeaderText = "alpha"
+        Me.Column21.Name = "Column21"
+        '
+        'Multiply3
+        '
+        Me.Multiply3.HeaderText = "Multiply by"
+        Me.Multiply3.Name = "Multiply3"
+        '
+        'Column22
+        '
+        Me.Column22.HeaderText = "Delta Weight"
+        Me.Column22.Name = "Column22"
         '
         'BhamANN
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1285, 882)
+        Me.ClientSize = New System.Drawing.Size(1329, 882)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox1)
@@ -367,12 +409,6 @@ Partial Class BhamANN
     Friend WithEvents Button1 As Button
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents Label1 As Label
-    Friend WithEvents Column5 As DataGridViewTextBoxColumn
-    Friend WithEvents Column1 As DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As DataGridViewTextBoxColumn
-    Friend WithEvents Column3 As DataGridViewTextBoxColumn
-    Friend WithEvents Column4 As DataGridViewTextBoxColumn
-    Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridView2 As DataGridView
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents GroupBox3 As GroupBox
@@ -392,9 +428,22 @@ Partial Class BhamANN
     Friend WithEvents Column12 As DataGridViewTextBoxColumn
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents DataGridView5 As DataGridView
+    Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Column16 As DataGridViewTextBoxColumn
     Friend WithEvents Column17 As DataGridViewTextBoxColumn
+    Friend WithEvents equals As DataGridViewTextBoxColumn
     Friend WithEvents Column18 As DataGridViewTextBoxColumn
+    Friend WithEvents Multiply1 As DataGridViewTextBoxColumn
     Friend WithEvents Column19 As DataGridViewTextBoxColumn
+    Friend WithEvents Multiply2 As DataGridViewTextBoxColumn
     Friend WithEvents Column20 As DataGridViewTextBoxColumn
+    Friend WithEvents Add1 As DataGridViewTextBoxColumn
+    Friend WithEvents Column21 As DataGridViewTextBoxColumn
+    Friend WithEvents Multiply3 As DataGridViewTextBoxColumn
+    Friend WithEvents Column22 As DataGridViewTextBoxColumn
 End Class

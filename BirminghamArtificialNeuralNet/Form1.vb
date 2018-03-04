@@ -129,6 +129,12 @@ Public Class BhamANN
         Dim eta As Double = 0.9
         Dim alpha As Double = 0.5
         Dim x, y As Int32
+        DataGridView5.Columns("equals").ValueType = System.Type.GetType("System.String")
+        DataGridView5.Columns("Multiply1").ValueType = System.Type.GetType("System.String")
+        DataGridView5.Columns("Multiply2").ValueType = System.Type.GetType("System.String")
+        DataGridView5.Columns("Add1").ValueType = System.Type.GetType("System.String")
+        DataGridView5.Columns("Multiply3").ValueType = System.Type.GetType("System.String")
+
         x = 1
         y = 0
         ''Ensure that the required number of rows are available
@@ -187,7 +193,12 @@ Public Class BhamANN
                     DeltaWeightIH(i, j) = eta * TrainingValues(p, i) * DeltaH(j) + alpha * DeltaWeightIH(i, j)
                     WeightIH(i, j) += DeltaWeightIH(i, j)
                 Next
+                If epoch Mod 250 = 0 Then
+                    DataGridView5.Rows.Add(New String() {epoch, DeltaWeightIH(i, j), "=", eta, "*", TrainingValues(p, i), "*", DeltaH(j), "+", alpha, "*", DeltaWeightIH(i, j)})
+                End If
             Next
+
+
             For k = 1 To NUMOUT 'update weights WeightHO */
                 DeltaWeightHO(0, k) = eta * DeltaO(k) + alpha * DeltaWeightHO(0, k)
                 WeightHO(0, k) += DeltaWeightHO(0, k)
@@ -198,7 +209,6 @@ Public Class BhamANN
             Next
             If epoch Mod 250 = 0 Then
                 DataGridView1.Rows.Add(New String() {epoch, Output(1, 1), Output(2, 1), Output(3, 1), Output(4, 1), Errored})
-                DataGridView5.Rows.Add(New String() {epoch, WeightIH(0, 0), WeightIH(0, 1), WeightIH(0, 2), WeightIH(0, 3), WeightIH(1, 0), WeightIH(1, 1), WeightIH(1, 2), WeightIH(1, 3), WeightIH(2, 0), WeightIH(2, 1), WeightIH(2, 2), WeightIH(2, 3), WeightIH(3, 0), WeightIH(3, 1), WeightIH(3, 2), WeightIH(3, 3)})
             End If
 
             If Errored < SUCCESS Then
