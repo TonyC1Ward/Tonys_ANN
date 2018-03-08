@@ -10,8 +10,8 @@ Public Class BhamANN
     Public Const SUCCESS As Double = 0.0002
     Public Const MAX_EPOCH As Int32 = 2000000
 
-    Public DeltaWeightIH(NUMIN + 1, NUMHID + 1) As Double
-    Public WeightIH(NUMIN + 1, NUMHID + 1) As Double
+    Public DeltaWeightInputToHidden(NUMIN + 1, NUMHID + 1) As Double
+    Public WeightInputToHidden(NUMIN + 1, NUMHID + 1) As Double
     Public DeltaWeightHO(NUMHID + 1, NUMOUT + 1) As Double
     Public WeightHO(NUMHID + 1, NUMOUT + 1) As Double
     Public Output(NUMPAT + 1, NUMOUT + 1) As Double
@@ -83,19 +83,18 @@ Public Class BhamANN
         'MsgBox("Target set loaded")
     End Function
 
-    Private Sub InitialiseWeightIH()
+    Private Sub InitialiseWeightInputToHidden()
         Dim i, j As Int16
         For j = 1 To NUMHID
             For i = 0 To NUMIN
-                DeltaWeightIH(i, j) = 0.0
-                WeightIH(i, j) = Abs(2.0 * (Rando() - 0.5) * smallwt)
+                DeltaWeightInputToHidden(i, j) = 0.0
+                WeightInputToHidden(i, j) = Abs(2.0 * (GetRandomNumber() - 0.5) * smallwt)
             Next
         Next
     End Sub
 
-    Private Function Rando() As Double
+    Private Function GetRandomNumber() As Double
         Dim NewRandom As New Random
-        'Dim Number As Double = NewRandom.Next(0, 1) + NewRandom.NextDouble()
         Dim Number As Double = Rnd()
         Return Abs(Number)
     End Function
@@ -105,13 +104,13 @@ Public Class BhamANN
         For k = 1 To NUMOUT
             For j = 0 To NUMHID
                 DeltaWeightHO(j, k) = 0.0
-                WeightHO(j, k) = Abs(2.0 * (Rando() - 0.5) * smallwt)
+                WeightHO(j, k) = Abs(2.0 * (GetRandomNumber() - 0.5) * smallwt)
             Next
         Next
     End Sub
 
     Private Sub BhamANN_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitialiseWeightIH()
+        InitialiseWeightInputToHidden()
         InitialiseWeightHO()
     End Sub
 
@@ -137,33 +136,26 @@ Public Class BhamANN
 
         x = 1
         y = 0
-        ''Ensure that the required number of rows are available
-        'If DataGridView1.Rows.Count < Output.GetUpperBound(0) Then
-        '    DataGridView1.Rows.Add((Output.GetUpperBound(0) + 1) - DataGridView1.Rows.Count)
-        'End If
 
         For epoch = 0 To MAX_EPOCH
-            'MsgBox("Current epoch = " + CStr(epoch))
-            For p = 1 To NUMPAT ' randomize order of training patterns
+            For p = 1 To NUMPAT ' GetRandomNumbermize order of training patterns
                 ranpat(p) = p
             Next
             For p = 1 To NUMPAT
-                np = p + Rando() * (NUMPAT + 1 - p)
+                np = p + GetRandomNumber() * (NUMPAT + 1 - p)
                 op = ranpat(p)
                 ranpat(p) = ranpat(np)
                 ranpat(np) = op
             Next
-
             Errored = 0.0
             For np = 1 To NUMPAT
                 p = ranpat(np)
                 For j = 1 To NUMHID ' compute hidden unit activations */
-                    SumH(p, j) = WeightIH(0, j)
+                    SumH(p, j) = WeightInputToHidden(0, j)
                     For i = 1 To NUMIN
-                        SumH(p, j) += TrainingValues(p, i) * WeightIH(i, j)
-                        'SumH(p, j) += Input(p, i) * WeightIH(i, j)
+                        SumH(p, j) += TrainingValues(p, i) * WeightInputToHidden(i, j)
                     Next
-                    Hidden(p, j) = sigmoid(SumH(p, j))      '1.0/(1.0 + exp(-SumH[p][j])) ;*/
+                    Hidden(p, j) = sigmoid(SumH(p, j))
                 Next
             Next
             For k = 1 To NUMOUT   ' compute output unit activations And errors */
@@ -171,13 +163,9 @@ Public Class BhamANN
                 For j = 1 To NUMHID
                     SumO(p, k) += Hidden(p, j) * WeightHO(j, k)
                 Next
-                Output(p, k) = sigmoid(SumO(p, k))    '1.0/(1.0 + exp(-SumO[p][k])) ;  Sigmoidal Outputs */
-                'Output[p][k] = SumO[p][k];      Linear Outputs */
-                Errored += 0.5 * (TargetValues(p, k) - Output(p, k)) * (TargetValues(p, k) - Output(p, k))   ' SSE */
-                'Error -= ( Target[p][k] * log( Output[p][k] ) + ( 1.0 - Target[p][k] ) * log( 1.0 - Output[p][k] ) ) ;    Cross-Entropy Error */
-                DeltaO(k) = (TargetValues(p, k) - Output(p, k)) * Output(p, k) * (1.0 - Output(p, k))   ' Sigmoidal Outputs, SSE */
-                'DeltaO[k] = Target[p][k] - Output[p][k];     Sigmoidal Outputs, Cross-Entropy Error */
-                'DeltaO[k] = Target[p][k] - Output[p][k];     Linear Outputs, SSE */
+                Output(p, k) = sigmoid(SumO(p, k))
+                Errored += 0.5 * (TargetValues(p, k) - Output(p, k)) * (TargetValues(p, k) - Output(p, k))   'SSE
+                DeltaO(k) = (TargetValues(p, k) - Output(p, k)) * Output(p, k) * (1.0 - Output(p, k))   'Sigmoidal Outputs
             Next
             For j = 1 To NUMHID     'back-propagate' errors to hidden layer */
                 SumDOW(j) = 0.0
@@ -187,17 +175,16 @@ Public Class BhamANN
                 DeltaH(j) = SumDOW(j) * Hidden(p, j) * (1.0 - Hidden(p, j))
             Next
             For j = 1 To NUMHID  'update weights WeightIH */
-                DeltaWeightIH(0, j) = eta * DeltaH(j) + alpha * DeltaWeightIH(0, j)
-                WeightIH(0, j) += DeltaWeightIH(0, j)
+                DeltaWeightInputToHidden(0, j) = eta * DeltaH(j) + alpha * DeltaWeightInputToHidden(0, j)
+                WeightInputToHidden(0, j) += DeltaWeightInputToHidden(0, j)
                 For i = 1 To NUMIN
-                    DeltaWeightIH(i, j) = eta * TrainingValues(p, i) * DeltaH(j) + alpha * DeltaWeightIH(i, j)
-                    WeightIH(i, j) += DeltaWeightIH(i, j)
+                    Dim CheckDelta As Double
+                    CheckDelta = DeltaWeightInputToHidden(i, j)
+                    DeltaWeightInputToHidden(i, j) = eta * TrainingValues(p, i) * DeltaH(j) + alpha * DeltaWeightInputToHidden(i, j)
+                    WeightInputToHidden(i, j) += DeltaWeightInputToHidden(i, j)
+                    DataGridView5.Rows.Add(New String() {epoch, CheckDelta, "=", eta, "*", TrainingValues(p, i), "*", DeltaH(j), "+", alpha, "*", DeltaWeightInputToHidden(i, j)})
                 Next
-                If epoch Mod 250 = 0 Then
-                    DataGridView5.Rows.Add(New String() {epoch, DeltaWeightIH(i, j), "=", eta, "*", TrainingValues(p, i), "*", DeltaH(j), "+", alpha, "*", DeltaWeightIH(i, j)})
-                End If
             Next
-
 
             For k = 1 To NUMOUT 'update weights WeightHO */
                 DeltaWeightHO(0, k) = eta * DeltaO(k) + alpha * DeltaWeightHO(0, k)
@@ -267,6 +254,28 @@ Public Class BhamANN
         DataGridView4.Columns(0).DefaultCellStyle.BackColor = Color.DarkGray
         For i = 1 To 4
             DataGridView4.Rows.Add(New String() {i, Output(i, 1), Round(Output(i, 1))})
+        Next
+    End Sub
+
+    Private Sub AlternateToSigmoid()
+        Dim SumO(NUMPAT + 1, NUMOUT + 1), Hidden(NUMPAT + 1, NUMHID + 1), Errored, DeltaO(NUMOUT + 1) As Double
+        Dim p As Int64
+        ''Ensure that the required number of rows are available
+        'If DataGridView1.Rows.Count < Output.GetUpperBound(0) Then
+        '    DataGridView1.Rows.Add((Output.GetUpperBound(0) + 1) - DataGridView1.Rows.Count)
+        'End If
+        For k = 1 To NUMOUT   ' compute output unit activations And errors */
+            SumO(p, k) = WeightHO(0, k)
+            For j = 1 To NUMHID
+                SumO(p, k) += Hidden(p, j) * WeightHO(j, k)
+            Next
+            Output(p, k) = sigmoid(SumO(p, k))    '1.0/(1.0 + exp(-SumO[p][k])) ;  Sigmoidal Outputs */
+            'Output[p][k] = SumO[p][k];      Linear Outputs */
+            Errored += 0.5 * (TargetValues(p, k) - Output(p, k)) * (TargetValues(p, k) - Output(p, k))   ' SSE */
+            'Error -= ( Target[p][k] * log( Output[p][k] ) + ( 1.0 - Target[p][k] ) * log( 1.0 - Output[p][k] ) ) ;    Cross-Entropy Error */
+            DeltaO(k) = (TargetValues(p, k) - Output(p, k)) * Output(p, k) * (1.0 - Output(p, k))   ' Sigmoidal Outputs, SSE */
+            'DeltaO[k] = Target[p][k] - Output[p][k];     Sigmoidal Outputs, Cross-Entropy Error */
+            'DeltaO[k] = Target[p][k] - Output[p][k];     Linear Outputs, SSE */
         Next
     End Sub
 
