@@ -2,21 +2,23 @@
 Imports System.Math
 
 Public Class BhamANN
-    Public Const NUMIN As Int16 = 2
-    Public Const NUMHID As Int16 = 2
+    Public Const NumberOfInputNodes As Int16 = 2
+    Public Const NumberOfHiddenNodes As Int16 = 2
     Public Const smallwt As Double = 0.5
-    Public Const NUMOUT As Int16 = 1
-    Public Const NUMPAT As Int16 = 4
+    Public Const NumberOfOutputNodes As Int16 = 1
+    Public Const NumberOfTrainingRecords As Int16 = 4
     Public Const SUCCESS As Double = 0.0002
-    Public Const MAX_EPOCH As Int32 = 2000000
+    Public Const MAX_EPOCH As Int64 = 2000000
+    Public Const NumberOfTrainingFields As Int64 = 3
 
-    Public DeltaWeightInputToHidden(NUMIN + 1, NUMHID + 1) As Double
-    Public WeightInputToHidden(NUMIN + 1, NUMHID + 1) As Double
-    Public DeltaWeightHO(NUMHID + 1, NUMOUT + 1) As Double
-    Public WeightHO(NUMHID + 1, NUMOUT + 1) As Double
-    Public Output(NUMPAT + 1, NUMOUT + 1) As Double
-    Public TrainingValues(4, 3) As Double
-    Public TargetValues(4, 3) As Double
+
+    Public DeltaWeightInputToHidden(NumberOfInputNodes + 1, NumberOfHiddenNodes + 1) As Double
+    Public WeightInputToHidden(NumberOfInputNodes + 1, NumberOfHiddenNodes + 1) As Double
+    Public DeltaWeightHiddenToOutput(NumberOfHiddenNodes + 1, NumberOfOutputNodes + 1) As Double
+    Public WeightHiddenToOutput(NumberOfHiddenNodes + 1, NumberOfOutputNodes + 1) As Double
+    Public Output(NumberOfTrainingRecords + 1, NumberOfOutputNodes + 1) As Double
+    Public TrainingValues(NumberOfTrainingRecords, NumberOfTrainingFields) As Double
+    Public TargetValues(NumberOfTrainingRecords, NumberOfTrainingFields) As Double
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
         TargetValues = LoadDataArray(TargetValues)
@@ -85,8 +87,8 @@ Public Class BhamANN
 
     Private Sub InitialiseWeightInputToHidden()
         Dim i, j As Int16
-        For j = 1 To NUMHID
-            For i = 0 To NUMIN
+        For j = 1 To NumberOfHiddenNodes
+            For i = 0 To NumberOfInputNodes
                 DeltaWeightInputToHidden(i, j) = 0.0
                 WeightInputToHidden(i, j) = Abs(2.0 * (GetRandomNumber() - 0.5) * smallwt)
             Next
@@ -99,19 +101,19 @@ Public Class BhamANN
         Return Abs(Number)
     End Function
 
-    Private Sub InitialiseWeightHO()
+    Private Sub InitialiseWeightHiddenToOutput()
         Dim j, k As Int16
-        For k = 1 To NUMOUT
-            For j = 0 To NUMHID
-                DeltaWeightHO(j, k) = 0.0
-                WeightHO(j, k) = Abs(2.0 * (GetRandomNumber() - 0.5) * smallwt)
+        For k = 1 To NumberOfOutputNodes
+            For j = 0 To NumberOfHiddenNodes
+                DeltaWeightHiddenToOutput(j, k) = 0.0
+                WeightHiddenToOutput(j, k) = Abs(2.0 * (GetRandomNumber() - 0.5) * smallwt)
             Next
         Next
     End Sub
 
     Private Sub BhamANN_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitialiseWeightInputToHidden()
-        InitialiseWeightHO()
+        InitialiseWeightHiddenToOutput()
     End Sub
 
     Private Function sigmoid(ByVal x As Double) As Double
@@ -122,9 +124,9 @@ Public Class BhamANN
     End Function
 
     Private Sub DriveTheNeuralNetwork()
-        Dim i, j, k, p, np, op, ranpat(NUMPAT + 1) As Int64
-        Dim SumH(NUMPAT + 1, NUMHID + 1), Hidden(NUMPAT + 1, NUMHID + 1), SumO(NUMPAT + 1, NUMOUT + 1) As Double
-        Dim DeltaO(NUMOUT + 1), SumDOW(NUMHID + 1), DeltaH(NUMHID + 1), Errored, epoch As Double
+        Dim i, j, k, p, np, op, ranpat(NumberOfTrainingRecords + 1) As Int64
+        Dim SumHidden(NumberOfTrainingRecords + 1, NumberOfHiddenNodes + 1), Hidden(NumberOfTrainingRecords + 1, NumberOfHiddenNodes + 1), SumO(NumberOfTrainingRecords + 1, NumberOfOutputNodes + 1) As Double
+        Dim DeltaO(NumberOfOutputNodes + 1), SumDOW(NumberOfHiddenNodes + 1), DeltaH(NumberOfHiddenNodes + 1), Errored, epoch As Double
         Dim eta As Double = 0.9
         Dim alpha As Double = 0.5
         Dim x, y As Int32
@@ -133,51 +135,56 @@ Public Class BhamANN
         DataGridView5.Columns("Multiply2").ValueType = System.Type.GetType("System.String")
         DataGridView5.Columns("Add1").ValueType = System.Type.GetType("System.String")
         DataGridView5.Columns("Multiply3").ValueType = System.Type.GetType("System.String")
+        DataGridView5.Columns("equals").Width = 30
+        DataGridView5.Columns("Multiply1").Width = 45
+        DataGridView5.Columns("Multiply2").Width = 45
+        DataGridView5.Columns("Multiply3").Width = 45
+        DataGridView5.Columns("Add1").Width = 30
 
         x = 1
         y = 0
 
         For epoch = 0 To MAX_EPOCH
-            For p = 1 To NUMPAT ' GetRandomNumbermize order of training patterns
+            For p = 1 To NumberOfTrainingRecords ' GetRandomNumbermize order of training patterns
                 ranpat(p) = p
             Next
-            For p = 1 To NUMPAT
-                np = p + GetRandomNumber() * (NUMPAT + 1 - p)
+            For p = 1 To NumberOfTrainingRecords
+                np = p + GetRandomNumber() * (NumberOfTrainingRecords + 1 - p)
                 op = ranpat(p)
                 ranpat(p) = ranpat(np)
                 ranpat(np) = op
             Next
             Errored = 0.0
-            For np = 1 To NUMPAT
+            For np = 1 To NumberOfTrainingRecords
                 p = ranpat(np)
-                For j = 1 To NUMHID ' compute hidden unit activations */
-                    SumH(p, j) = WeightInputToHidden(0, j)
-                    For i = 1 To NUMIN
-                        SumH(p, j) += TrainingValues(p, i) * WeightInputToHidden(i, j)
+                For j = 1 To NumberOfHiddenNodes ' compute hidden unit activations */
+                    SumHidden(p, j) = WeightInputToHidden(0, j)
+                    For i = 1 To NumberOfInputNodes
+                        SumHidden(p, j) += TrainingValues(p, i) * WeightInputToHidden(i, j)
                     Next
-                    Hidden(p, j) = sigmoid(SumH(p, j))
+                    Hidden(p, j) = sigmoid(SumHidden(p, j))
                 Next
             Next
-            For k = 1 To NUMOUT   ' compute output unit activations And errors */
-                SumO(p, k) = WeightHO(0, k)
-                For j = 1 To NUMHID
-                    SumO(p, k) += Hidden(p, j) * WeightHO(j, k)
+            For k = 1 To NumberOfOutputNodes   ' compute output unit activations And errors */
+                SumO(p, k) = WeightHiddenToOutput(0, k)
+                For j = 1 To NumberOfHiddenNodes
+                    SumO(p, k) += Hidden(p, j) * WeightHiddenToOutput(j, k)
                 Next
                 Output(p, k) = sigmoid(SumO(p, k))
                 Errored += 0.5 * (TargetValues(p, k) - Output(p, k)) * (TargetValues(p, k) - Output(p, k))   'SSE
                 DeltaO(k) = (TargetValues(p, k) - Output(p, k)) * Output(p, k) * (1.0 - Output(p, k))   'Sigmoidal Outputs
             Next
-            For j = 1 To NUMHID     'back-propagate' errors to hidden layer */
+            For j = 1 To NumberOfHiddenNodes     'back-propagate' errors to hidden layer */
                 SumDOW(j) = 0.0
-                For k = 1 To NUMOUT
-                    SumDOW(j) += WeightHO(j, k) * DeltaO(k)
+                For k = 1 To NumberOfOutputNodes
+                    SumDOW(j) += WeightHiddenToOutput(j, k) * DeltaO(k)
                 Next
                 DeltaH(j) = SumDOW(j) * Hidden(p, j) * (1.0 - Hidden(p, j))
             Next
-            For j = 1 To NUMHID  'update weights WeightIH */
+            For j = 1 To NumberOfHiddenNodes  'update weights WeightIH */
                 DeltaWeightInputToHidden(0, j) = eta * DeltaH(j) + alpha * DeltaWeightInputToHidden(0, j)
                 WeightInputToHidden(0, j) += DeltaWeightInputToHidden(0, j)
-                For i = 1 To NUMIN
+                For i = 1 To NumberOfInputNodes
                     Dim CheckDelta As Double
                     CheckDelta = DeltaWeightInputToHidden(i, j)
                     DeltaWeightInputToHidden(i, j) = eta * TrainingValues(p, i) * DeltaH(j) + alpha * DeltaWeightInputToHidden(i, j)
@@ -186,12 +193,12 @@ Public Class BhamANN
                 Next
             Next
 
-            For k = 1 To NUMOUT 'update weights WeightHO */
-                DeltaWeightHO(0, k) = eta * DeltaO(k) + alpha * DeltaWeightHO(0, k)
-                WeightHO(0, k) += DeltaWeightHO(0, k)
-                For j = 1 To NUMHID
-                    DeltaWeightHO(j, k) = eta * Hidden(p, j) * DeltaO(k) + alpha * DeltaWeightHO(j, k)
-                    WeightHO(j, k) += DeltaWeightHO(j, k)
+            For k = 1 To NumberOfOutputNodes 'update weights WeightHiddenToOutput */
+                DeltaWeightHiddenToOutput(0, k) = eta * DeltaO(k) + alpha * DeltaWeightHiddenToOutput(0, k)
+                WeightHiddenToOutput(0, k) += DeltaWeightHiddenToOutput(0, k)
+                For j = 1 To NumberOfHiddenNodes
+                    DeltaWeightHiddenToOutput(j, k) = eta * Hidden(p, j) * DeltaO(k) + alpha * DeltaWeightHiddenToOutput(j, k)
+                    WeightHiddenToOutput(j, k) += DeltaWeightHiddenToOutput(j, k)
                 Next
             Next
             If epoch Mod 250 = 0 Then
@@ -258,16 +265,16 @@ Public Class BhamANN
     End Sub
 
     Private Sub AlternateToSigmoid()
-        Dim SumO(NUMPAT + 1, NUMOUT + 1), Hidden(NUMPAT + 1, NUMHID + 1), Errored, DeltaO(NUMOUT + 1) As Double
+        Dim SumO(NumberOfTrainingRecords + 1, NumberOfOutputNodes + 1), Hidden(NumberOfTrainingRecords + 1, NumberOfHiddenNodes + 1), Errored, DeltaO(NumberOfOutputNodes + 1) As Double
         Dim p As Int64
         ''Ensure that the required number of rows are available
         'If DataGridView1.Rows.Count < Output.GetUpperBound(0) Then
         '    DataGridView1.Rows.Add((Output.GetUpperBound(0) + 1) - DataGridView1.Rows.Count)
         'End If
-        For k = 1 To NUMOUT   ' compute output unit activations And errors */
-            SumO(p, k) = WeightHO(0, k)
-            For j = 1 To NUMHID
-                SumO(p, k) += Hidden(p, j) * WeightHO(j, k)
+        For k = 1 To NumberOfOutputNodes   ' compute output unit activations And errors */
+            SumO(p, k) = WeightHiddenToOutput(0, k)
+            For j = 1 To NumberOfHiddenNodes
+                SumO(p, k) += Hidden(p, j) * WeightHiddenToOutput(j, k)
             Next
             Output(p, k) = sigmoid(SumO(p, k))    '1.0/(1.0 + exp(-SumO[p][k])) ;  Sigmoidal Outputs */
             'Output[p][k] = SumO[p][k];      Linear Outputs */
