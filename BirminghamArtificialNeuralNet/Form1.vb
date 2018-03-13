@@ -85,11 +85,11 @@ Public Class BhamANN
         Chart1.Series.Add("Error")
         With Chart1.Series("Error")
             .ChartType = DataVisualization.Charting.SeriesChartType.Line
-            .Points.AddXY(0, 100)
-            .Points.AddXY(1, 90)
-            .Points.AddXY(2, 80)
-            .Points.AddXY(3, 60)
-            .Points.AddXY(4, 30)
+            '.Points.AddXY(0, 100)
+            '.Points.AddXY(1, 90)
+            '.Points.AddXY(2, 80)
+            '.Points.AddXY(3, 60)
+            '.Points.AddXY(4, 30)
         End With
 
     End Sub
