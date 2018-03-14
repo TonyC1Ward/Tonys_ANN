@@ -23,3 +23,15 @@ C:\Tony\Tonys_ANN\Tonys_ANN\BirminghamArtificialNeuralNet\bin\Debug\BirminghamAr
 C:\Tony\Tonys_ANN\Tonys_ANN\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.exe
 C:\Tony\Tonys_ANN\Tonys_ANN\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.pdb
 C:\Tony\Tonys_ANN\Tonys_ANN\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.xml
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.exe.config
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.exe
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.pdb
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\bin\Debug\BirminghamArtificialNeuralNet.xml
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.vbprojResolveAssemblyReference.cache
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.BhamANN.resources
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.Resources.resources
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.vbproj.GenerateResource.Cache
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.vbproj.CoreCompileInputs.cache
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.exe
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.xml
+C:\Work\ANNDev\Tonys_ANN\BirminghamArtificialNeuralNet\obj\Debug\BirminghamArtificialNeuralNet.pdb
