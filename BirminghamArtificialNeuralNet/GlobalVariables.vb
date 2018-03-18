@@ -14,4 +14,5 @@
     Public Shared Output(NumberOfTrainingRecords + 1, NumberOfOutputNodes + 1) As Double
     Public Shared TrainingValues(NumberOfTrainingRecords, NumberOfTrainingFields) As Double
     Public Shared TargetValues(NumberOfTrainingRecords, NumberOfTrainingFields) As Double
+    Public Shared Hidden(NumberOfTrainingRecords + 1, NumberOfHiddenNodes + 1)
 End Class

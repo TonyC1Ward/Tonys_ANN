@@ -59,9 +59,9 @@ Module ANNMainFunctions
         Next
     End Sub
 
-    Public Sub DriveTheNeuralNetwork()
+    Public Sub TrainTheNeuralNetwork()
         Dim i, j, k, p, np, op, ranpat(NumberOfTrainingRecords + 1) As Int64
-        Dim SumHidden(NumberOfTrainingRecords + 1, NumberOfHiddenNodes + 1), Hidden(NumberOfTrainingRecords + 1, NumberOfHiddenNodes + 1), SumO(NumberOfTrainingRecords + 1, NumberOfOutputNodes + 1) As Double
+        Dim SumHidden(NumberOfTrainingRecords + 1, NumberOfHiddenNodes + 1), SumO(NumberOfTrainingRecords + 1, NumberOfOutputNodes + 1) As Double
         Dim DeltaO(NumberOfOutputNodes + 1), SumDOW(NumberOfHiddenNodes + 1), DeltaH(NumberOfHiddenNodes + 1), Errored, epoch As Double
         Dim eta As Double = 0.9
         Dim alpha As Double = 0.5
@@ -111,11 +111,11 @@ Module ANNMainFunctions
                 DeltaWeightInputToHidden(0, j) = eta * DeltaH(j) + alpha * DeltaWeightInputToHidden(0, j)
                 WeightInputToHidden(0, j) += DeltaWeightInputToHidden(0, j)
                 For i = 1 To NumberOfInputNodes
-                    Dim CheckDelta As Double
-                    CheckDelta = DeltaWeightInputToHidden(i, j)
+                    'Dim CheckDelta As Double
+                    'CheckDelta = DeltaWeightInputToHidden(i, j)
                     DeltaWeightInputToHidden(i, j) = eta * TrainingValues(p, i) * DeltaH(j) + alpha * DeltaWeightInputToHidden(i, j)
                     WeightInputToHidden(i, j) += DeltaWeightInputToHidden(i, j)
-                    BhamANN.DataGridView5.Rows.Add(New String() {epoch, CheckDelta, "=", eta, "*", TrainingValues(p, i), "*", DeltaH(j), "+", alpha, "*", DeltaWeightInputToHidden(i, j)})
+                    'BhamANN.DataGridView5.Rows.Add(New String() {epoch, CheckDelta, "=", eta, "*", TrainingValues(p, i), "*", DeltaH(j), "+", alpha, "*", DeltaWeightInputToHidden(i, j)})
                 Next
             Next
 

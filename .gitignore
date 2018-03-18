@@ -29,7 +29,7 @@ bld/
 .ide
 .ide-shm
 .ide-wal
-
+*.ide
 
 
 

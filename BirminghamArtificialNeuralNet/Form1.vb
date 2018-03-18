@@ -8,20 +8,6 @@ Public Class BhamANN
         TargetValues = LoadDataArray(TargetValues)
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs)
-        Dim i, j As Int16
-        Dim TheData As String
-        TheData = ""
-
-        For i = 0 To TargetValues.GetUpperBound(0) - 1
-            For j = 0 To TargetValues.GetUpperBound(1) - 1
-                TheData = TheData + CStr(TargetValues(i, j))
-            Next
-            MsgBox(i & " " & "Data is >" & " " & TheData)
-            TheData = ""
-        Next
-    End Sub
-
     Private Sub Button3_Click(sender As Object, e As EventArgs)
         TrainingValues = LoadDataArray(TrainingValues)
     End Sub
@@ -85,6 +71,7 @@ Public Class BhamANN
         Chart1.Series.Add("Error")
         With Chart1.Series("Error")
             .ChartType = DataVisualization.Charting.SeriesChartType.Line
+            .Color = Color.Red
             '.Points.AddXY(0, 100)
             '.Points.AddXY(1, 90)
             '.Points.AddXY(2, 80)
@@ -96,7 +83,7 @@ Public Class BhamANN
 
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        DriveTheNeuralNetwork()
+        TrainTheNeuralNetwork()
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
@@ -147,6 +134,31 @@ Public Class BhamANN
         Next
     End Sub
 
+    Private Sub Button4_Click_1(sender As Object, e As EventArgs) Handles Button4.Click
+        Dim Accum As Double
+        Dim TestInput(NumberOfInputNodes) As Double
+        TestInput(0) = 0.0
+        TestInput(1) = 0.0
+        TestInput(2) = 0.0
 
 
+        For j = 1 To NumberOfHiddenNodes
+            Accum = WeightInputToHidden(NumberOfInputNodes, j)
+            For i = 1 To NumberOfInputNodes
+                Accum += TestInput(j - 1) * WeightInputToHidden(i, j)
+                MsgBox(CStr(Accum))
+            Next
+            Hidden(1, j) = ANNMainFunctions.Sigmoid(Accum)
+        Next
+
+        For k = 1 To NumberOfOutputNodes   ' compute output unit activations And errors */
+            Accum = WeightHiddenToOutput(NumberOfHiddenNodes, k)
+            For j = 1 To NumberOfHiddenNodes
+                Accum += Hidden(j, k) * WeightHiddenToOutput(j, k)
+            Next
+            Output(1, k) = ANNMainFunctions.Sigmoid(Accum)
+        Next
+
+
+    End Sub
 End Class
