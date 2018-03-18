@@ -56,6 +56,8 @@ Public Class BhamANN
     End Function
 
     Private Sub BhamANN_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Me.Size = New System.Drawing.Size(2000, 1250)
         InitialiseWeightInputToHidden()
         InitialiseWeightHiddenToOutput()
         DataGridView5.Columns("equals").ValueType = System.Type.GetType("System.String")
