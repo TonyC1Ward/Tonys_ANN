@@ -130,6 +130,8 @@ Module ANNMainFunctions
             If epoch Mod 250 = 0 Then
                 BhamANN.DataGridView1.Rows.Add(New String() {epoch, Output(1, 1), Output(2, 1), Output(3, 1), Output(4, 1), Errored})
                 BhamANN.Chart1.Series("Error").Points.AddXY(epoch, Errored)
+                BhamANN.Chart2.Series("DeltaHidden").Points.AddXY(epoch, DeltaH(1))
+
             End If
 
             If Errored < SUCCESS Then

@@ -74,12 +74,14 @@ Public Class BhamANN
         With Chart1.Series("Error")
             .ChartType = DataVisualization.Charting.SeriesChartType.Line
             .Color = Color.Red
-            '.Points.AddXY(0, 100)
-            '.Points.AddXY(1, 90)
-            '.Points.AddXY(2, 80)
-            '.Points.AddXY(3, 60)
-            '.Points.AddXY(4, 30)
         End With
+        Chart2.Series.Add("DeltaHidden")
+        With Chart2.Series("DeltaHidden")
+            .ChartType = DataVisualization.Charting.SeriesChartType.Line
+            .Color = Color.Red
+        End With
+
+
 
     End Sub
 
@@ -163,4 +165,5 @@ Public Class BhamANN
 
 
     End Sub
+
 End Class
